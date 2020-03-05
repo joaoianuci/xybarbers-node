@@ -10,7 +10,6 @@ class User extends Model {
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
         provider: Sequelize.BOOLEAN,
-        point: Sequelize.GEOMETRY,
       },
       {
         sequelize,
@@ -29,6 +28,7 @@ class User extends Model {
 
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+    this.belongsTo(models.Location, {foreignKey: 'location_id', as: 'point'});
   }
 
   checkPassword(password) {
