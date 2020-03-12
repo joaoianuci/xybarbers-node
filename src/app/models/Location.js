@@ -5,7 +5,7 @@ class Location extends Model {
     super.init(
       {
         longitude: Sequelize.FLOAT,
-        latidude: Sequelize.FLOAT,
+        latitude: Sequelize.FLOAT,
       },
       {
         sequelize,
@@ -16,7 +16,7 @@ class Location extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    this.hasOne(models.User, { foreignKey: 'location_id', as: 'user' });
   }
 }
 
