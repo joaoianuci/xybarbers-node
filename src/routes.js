@@ -15,6 +15,13 @@ routes.post(
   LocationController.store,
   FileController.store
 );
+routes.put(
+  '/users/:user_id',
+  upload.single('file'),
+  UserController.update,
+  LocationController.update,
+  FileController.update
+);
 
 routes.get('/users/:user_id', UserController.show);
 routes.delete('/users/:user_id', UserController.destroy);

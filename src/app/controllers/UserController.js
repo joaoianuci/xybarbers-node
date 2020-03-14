@@ -89,6 +89,32 @@ class UserController {
 
     return res.status(200).json();
   }
+
+  async update(req, res, next) {
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      number: Yup.number().required(),
+      street: Yup.string().required(),
+      neighborhood: Yup.string().required(),
+      city: Yup.string().required(),
+      longitude: Yup.number().required(),
+      latitude: Yup.number().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ where: { email: req.body.email } });
+    }
+    const user = await User.findByPk(req.params.user_id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'The user not exists' });
+    }
+
+    user.update(req.body);
+
+    req.user = user;
+    return next();
+  }
 }
 
 export default new UserController();

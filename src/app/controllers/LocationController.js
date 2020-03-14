@@ -15,6 +15,14 @@ class LocationController {
 
     return next();
   }
+
+  async update(req, res, next) {
+    const { latitude, longitude } = req.body;
+    const { user } = req;
+    const location = await Location.findOne({ where: { user_id: user.id } });
+    location.update({ latitude, longitude });
+    return next();
+  }
 }
 
 export default new LocationController();
