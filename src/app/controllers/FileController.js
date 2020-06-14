@@ -17,6 +17,8 @@ class FileController {
     await user.save();
 
     user.password_hash = undefined;
+    user.password_reset_token = undefined;
+    user.password_reset_expires = undefined;
 
     return res.json(user);
   }
