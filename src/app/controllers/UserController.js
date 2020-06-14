@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import PasswordValidator from 'password-validator';
 import User from '../models/User';
 import File from '../models/File';
 import Location from '../models/Location';
@@ -10,10 +11,6 @@ class UserController {
       email: Yup.string()
         .email()
         .required(),
-      password: Yup.string()
-        .required()
-        .min(6)
-        .max(35),
       number: Yup.number().required(),
       street: Yup.string().required(),
       neighborhood: Yup.string().required(),
@@ -21,6 +18,30 @@ class UserController {
       longitude: Yup.number().required(),
       latitude: Yup.number().required(),
     });
+    const passwordSchema = new PasswordValidator();
+
+    passwordSchema
+      .is()
+      .min(6)
+      .is()
+      .max(20)
+      .has()
+      .uppercase()
+      .has()
+      .lowercase()
+      .has()
+      .digits()
+      .has()
+      .not()
+      .spaces()
+      .has()
+      .symbols();
+
+    if (!passwordSchema.validate(req.body.password)) {
+      return res
+        .status(400)
+        .json({ message: 'Password is not satisfacting the requirements.' });
+    }
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ where: { email: req.body.email } });
@@ -48,6 +69,13 @@ class UserController {
     }
 
     const user = await User.findByPk(req.params.user_id, {
+      attributes: {
+        exclude: [
+          'password_hash',
+          'password_reset_token',
+          'password_reset_expires',
+        ],
+      },
       include: [
         {
           model: File,
