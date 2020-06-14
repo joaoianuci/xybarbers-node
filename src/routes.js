@@ -7,6 +7,8 @@ import LocationController from './app/controllers/LocationController';
 import ForgotPasswordController from './app/controllers/ForgotPasswordController';
 import ResetPasswordController from './app/controllers/ResetPasswordController';
 import AuthenticateController from './app/controllers/AuthenticateController';
+import SearchController from './app/controllers/SearchController';
+
 import authMiddleware from './middlewares/auth';
 
 const routes = new Router();
@@ -38,5 +40,7 @@ routes.post('/forgot', ForgotPasswordController.store);
 routes.post('/reset', ResetPasswordController.store);
 
 routes.post('/users/authenticate', AuthenticateController.store);
+
+routes.get('/providers', SearchController.index);
 
 export default routes;
