@@ -9,6 +9,7 @@ class Queue {
     this.queues = {};
 
     this.init();
+    this.sentry();
   }
 
   init() {
@@ -31,9 +32,18 @@ class Queue {
       queue.bull.process(queue.handle);
 
       queue.bull.on('failed', (job, err) => {
+        Sentry.configureScope(scope => {
+          scope.setUser({ job: job.queue.name });
+        });
         Sentry.captureException(err);
       });
     });
+  }
+
+  sentry() {
+    Sentry.init({ dsn: process.env.SENTRY_DSN });
+    Sentry.Handlers.requestHandler();
+    Sentry.Handlers.errorHandler();
   }
 }
 

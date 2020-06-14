@@ -32,6 +32,7 @@ routes.put(
 
 routes.get('/users/:user_id', UserController.show);
 routes.delete('/users/:user_id', authMiddleware, UserController.destroy);
+
 routes.get('/debug-sentry', function mainHandler() {
   throw new Error('My first Sentry error!');
 });
