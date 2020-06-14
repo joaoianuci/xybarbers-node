@@ -3,9 +3,11 @@ import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
+import * as Sentry from '@sentry/node';
+import BullBoard from 'bull-board';
+import Queue from './app/lib/Queue';
 
 import routes from './routes';
-
 import './database';
 
 class App {
@@ -14,6 +16,8 @@ class App {
 
     this.middlewares();
     this.routes();
+    this.bullBoard();
+    this.sentry();
   }
 
   middlewares() {
@@ -27,6 +31,17 @@ class App {
 
   routes() {
     this.server.use(routes);
+  }
+
+  bullBoard() {
+    BullBoard.setQueues(Queue.queues.map(queue => queue.bull));
+    this.server.use('/admin/queues', BullBoard.UI);
+  }
+
+  sentry() {
+    Sentry.init({ dsn: process.env.SENTRY_DSN });
+    this.server.use(Sentry.Handlers.requestHandler());
+    this.server.use(Sentry.Handlers.errorHandler());
   }
 }
 
