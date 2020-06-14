@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import crypto from 'crypto';
-import mailer from '../../modules/mailer';
+import Queue from '../lib/Queue';
 import User from '../models/User';
 
 class ForgotPasswordController {
@@ -33,27 +33,12 @@ class ForgotPasswordController {
       password_reset_expires: now,
       password_reset_token: token,
     });
-    const text = `Hello ${user.name}`;
-    mailer.sendMail(
-      {
-        to: email,
-        from: process.env.MAIL_USER,
-        template: './auth/forgot_password',
-        subject: 'Reset your password',
-        context: { text, token },
-      },
-      // eslint-disable-next-line consistent-return
-      err => {
-        if (err) {
-          return res
-            .status(400)
-            .send({ error: 'Cannot send forgot password email' });
-        }
-        return res
-          .status(200)
-          .send({ message: 'E-mail successfully sent', token });
-      }
-    );
+    await Queue.add('ForgotPasswordMail', {
+      user: { email, name: user.name },
+      token,
+    });
+
+    return res.json();
   }
 }
 export default new ForgotPasswordController();
