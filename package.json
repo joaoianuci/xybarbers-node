@@ -6,14 +6,16 @@
   "author": "João Vitor Ianuci",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
-    "queue": "nodemon src/queue.js"
+    "eslint:fix": "eslint --fix src  --ext js",
+    "dev": "npm-run-all -p dev:*",
+    "dev:server": "nodemon src/server.js",
+    "dev:queue": "nodemon src/queue.js"
   },
   "dependencies": {
     "@sentry/node": "5.6.2",
     "bcryptjs": "^2.4.3",
-    "bee-queue": "^1.2.2",
+    "bull": "^3.14.0",
+    "bull-board": "^0.9.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "date-fns": "^2.0.0-beta.5",
@@ -27,6 +29,8 @@
     "multer": "^1.4.2",
     "nodemailer": "^6.3.0",
     "nodemailer-express-handlebars": "^3.1.0",
+    "npm-run-all": "^4.1.5",
+    "password-validator": "^5.0.3",
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.15.1",
@@ -34,6 +38,7 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
+    "@types/sequelize": "^4.28.9",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.0",
