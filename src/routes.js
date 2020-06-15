@@ -58,7 +58,7 @@ routes.post(
   authMiddleware,
   AppointmentController.store
 );
-
+routes.get('/appointments', authMiddleware, AppointmentController.index);
 routes.delete(
   '/appointments/:provider_id',
   authMiddleware,
