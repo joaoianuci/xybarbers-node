@@ -98,17 +98,7 @@ class UserController {
   }
 
   async destroy(req, res) {
-    const schema = Yup.object().shape({
-      user_id: Yup.number().required(),
-    });
-
-    if (!(await schema.isValid(req.params))) {
-      return res
-        .status(400)
-        .json({ message: 'The user identifier not is valid' });
-    }
-
-    const user = await User.findByPk(req.params.user_id);
+    const user = await User.findByPk(req.userId);
     if (!user) {
       return res.status(404).json({ message: 'The user not exists' });
     }
@@ -132,7 +122,7 @@ class UserController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ where: { email: req.body.email } });
     }
-    const user = await User.findByPk(req.params.user_id);
+    const user = await User.findByPk(req.userId);
 
     if (!user) {
       return res.status(404).json({ message: 'The user not exists' });
