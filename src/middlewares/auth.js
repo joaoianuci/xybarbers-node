@@ -12,7 +12,7 @@ export default (req, res, next) => {
     return res.status(401).send({ error: 'Token malformatted' });
   jwt.verify(token, authConfig.secret, (err, decoded) => {
     if (err) return res.status(401).send({ error: err });
-    req.userId = decoded.id;
+    req.userId = decoded.params.id;
     return undefined;
   });
   return next();
