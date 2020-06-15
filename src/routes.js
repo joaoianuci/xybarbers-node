@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import ExpressBrute from 'express-brute';
+
 import multer from 'multer';
 import UserController from './app/controllers/UserController';
 import multerConfig from './config/multer';
@@ -10,9 +12,12 @@ import AuthenticateController from './app/controllers/AuthenticateController';
 import SearchController from './app/controllers/SearchController';
 
 import authMiddleware from './middlewares/auth';
+import AppointmentController from './app/controllers/AppointmentController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
+const store = new ExpressBrute.MemoryStore();
+const bruteForce = new ExpressBrute(store);
 
 routes.post(
   '/users',
@@ -40,8 +45,24 @@ routes.get('/debug-sentry', function mainHandler() {
 routes.post('/forgot', ForgotPasswordController.store);
 routes.post('/reset', ResetPasswordController.store);
 
-routes.post('/users/authenticate', AuthenticateController.store);
+routes.post(
+  '/users/authenticate',
+  bruteForce.prevent,
+  AuthenticateController.store
+);
 
-routes.get('/providers', SearchController.index);
+routes.get('/providers', authMiddleware, SearchController.index);
+
+routes.post(
+  '/appointments/:user_id',
+  authMiddleware,
+  AppointmentController.store
+);
+
+routes.delete(
+  '/appointments/:provider_id',
+  authMiddleware,
+  AppointmentController.destroy
+);
 
 export default routes;
