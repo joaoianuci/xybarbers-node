@@ -4,16 +4,17 @@ import ExpressBrute from 'express-brute';
 import multer from 'multer';
 import UserController from './app/controllers/UserController';
 import multerConfig from './config/multer';
+
 import FileController from './app/controllers/FileController';
 import LocationController from './app/controllers/LocationController';
 import ForgotPasswordController from './app/controllers/ForgotPasswordController';
 import ResetPasswordController from './app/controllers/ResetPasswordController';
 import AuthenticateController from './app/controllers/AuthenticateController';
 import SearchController from './app/controllers/SearchController';
-
-import authMiddleware from './middlewares/auth';
 import AppointmentController from './app/controllers/AppointmentController';
 import NotificationController from './app/controllers/NotificationController';
+
+import authMiddleware from './middlewares/auth';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -38,7 +39,6 @@ routes.use(authMiddleware);
 
 routes.put(
   '/users/:user_id',
-
   upload.single('file'),
   UserController.update,
   LocationController.update,
@@ -57,17 +57,9 @@ routes.post('/reset', ResetPasswordController.store);
 
 routes.get('/providers', SearchController.index);
 
-routes.post(
-  '/appointments/:user_id',
-
-  AppointmentController.store
-);
+routes.post('/appointments/:user_id', AppointmentController.store);
 routes.get('/appointments', AppointmentController.index);
-routes.delete(
-  '/appointments/:provider_id',
-
-  AppointmentController.destroy
-);
+routes.delete('/appointments/:provider_id', AppointmentController.destroy);
 
 routes.get('/notifications', NotificationController.index);
 routes.put('/notifications/:notification_id', NotificationController.read);

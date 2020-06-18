@@ -4,7 +4,6 @@ import File from '../models/File';
 import Location from '../models/Location';
 
 class SearchController {
-  // eslint-disable-next-line consistent-return
   async index(req, res) {
     const { user_id } = req.userId;
 
@@ -27,12 +26,12 @@ class SearchController {
     if (!user) {
       return res
         .status(400)
-        .json({ message: 'Not was able to find the user!' });
+        .json({ message: 'Not was able to find the user.' });
     }
     if (user.provider) {
       return res
         .status(400)
-        .json({ message: 'Providers users not able to find other providers!' });
+        .json({ message: 'Providers users not able to find other providers.' });
     }
     const providers = await User.findAll({
       where: {
