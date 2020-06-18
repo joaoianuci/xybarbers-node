@@ -13,6 +13,7 @@ import SearchController from './app/controllers/SearchController';
 
 import authMiddleware from './middlewares/auth';
 import AppointmentController from './app/controllers/AppointmentController';
+import NotificationController from './app/controllers/NotificationController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -26,9 +27,18 @@ routes.post(
   LocationController.store,
   FileController.store
 );
+
+routes.post(
+  '/users/authenticate',
+  bruteForce.prevent,
+  AuthenticateController.store
+);
+
+routes.use(authMiddleware);
+
 routes.put(
   '/users/:user_id',
-  authMiddleware,
+
   upload.single('file'),
   UserController.update,
   LocationController.update,
@@ -36,7 +46,7 @@ routes.put(
 );
 
 routes.get('/users/:user_id', UserController.show);
-routes.delete('/users/:user_id', authMiddleware, UserController.destroy);
+routes.delete('/users/:user_id', UserController.destroy);
 
 routes.get('/debug-sentry', function mainHandler() {
   throw new Error('My first Sentry error!');
@@ -45,24 +55,21 @@ routes.get('/debug-sentry', function mainHandler() {
 routes.post('/forgot', ForgotPasswordController.store);
 routes.post('/reset', ResetPasswordController.store);
 
-routes.post(
-  '/users/authenticate',
-  bruteForce.prevent,
-  AuthenticateController.store
-);
-
-routes.get('/providers', authMiddleware, SearchController.index);
+routes.get('/providers', SearchController.index);
 
 routes.post(
   '/appointments/:user_id',
-  authMiddleware,
+
   AppointmentController.store
 );
-routes.get('/appointments', authMiddleware, AppointmentController.index);
+routes.get('/appointments', AppointmentController.index);
 routes.delete(
   '/appointments/:provider_id',
-  authMiddleware,
+
   AppointmentController.destroy
 );
+
+routes.get('/notifications', NotificationController.index);
+routes.put('/notifications/:notification_id', NotificationController.read);
 
 export default routes;

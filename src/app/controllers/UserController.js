@@ -11,6 +11,7 @@ class UserController {
       email: Yup.string()
         .email()
         .required(),
+      provider: Yup.boolean(),
       number: Yup.number().required(),
       street: Yup.string().required(),
       neighborhood: Yup.string().required(),
