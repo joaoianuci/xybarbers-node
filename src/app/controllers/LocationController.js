@@ -13,8 +13,6 @@ class LocationController {
     user.location_id = location.id;
     await user.save();
 
-    user.password = undefined;
-
     return next();
   }
 

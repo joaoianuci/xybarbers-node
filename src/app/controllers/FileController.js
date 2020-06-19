@@ -16,11 +16,9 @@ class FileController {
 
     await user.save();
 
-    user.password_hash = undefined;
-    user.password_reset_token = undefined;
-    user.password_reset_expires = undefined;
+    const filteredUser = user.filteredUser(user);
 
-    return res.json(user);
+    return res.json(filteredUser);
   }
 
   async update(req, res, next) {
@@ -46,9 +44,9 @@ class FileController {
       ],
     });
 
-    updateUser.password_hash = undefined;
+    const filteredUser = updateUser.filteredupdateUser(updateUser);
 
-    return res.json(updateUser);
+    return res.json(filteredUser);
   }
 }
 
