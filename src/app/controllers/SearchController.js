@@ -5,9 +5,7 @@ import Location from '../models/Location';
 
 class SearchController {
   async index(req, res) {
-    const { user_id } = req.userId;
-
-    const user = await User.findByPk(user_id, {
+    const user = await User.findByPk(req.userId, {
       attributes: {
         exclude: [
           'password_hash',
@@ -36,6 +34,7 @@ class SearchController {
     const providers = await User.findAll({
       where: {
         provider: true,
+        provider_validate: true,
       },
       attributes: {
         exclude: [
