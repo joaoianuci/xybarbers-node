@@ -9,6 +9,7 @@ class User extends Model {
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
+        bio: Sequelize.STRING,
         provider: Sequelize.BOOLEAN,
         number: Sequelize.INTEGER,
         street: Sequelize.STRING,
@@ -21,6 +22,13 @@ class User extends Model {
         password_reset_expires: {
           type: Sequelize.DATE,
           defaultValue: null,
+        },
+        provider_token: {
+          type: Sequelize.STRING,
+          defaultValue: null,
+        },
+        provider_validate: {
+          type: Sequelize.BOOLEAN,
         },
       },
       {
@@ -42,8 +50,19 @@ class User extends Model {
     this.hasOne(models.Location, { foreignKey: 'user_id', as: 'point' });
   }
 
-  checkPassword(password) {
-    return bcrypt.compare(password, this.password_hash);
+  async checkPassword(password) {
+    const check = await bcrypt.compare(password, this.password_hash);
+    return check;
+  }
+
+  filteredUser(user) {
+    user.password = undefined;
+    user.password_hash = undefined;
+    user.password_reset_token = undefined;
+    user.password_reset_expires = undefined;
+    user.provider_token = undefined;
+
+    return user;
   }
 }
 
