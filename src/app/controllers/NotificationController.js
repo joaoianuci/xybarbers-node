@@ -32,6 +32,7 @@ class NotificationController {
       },
       { useFindAndModify: false }
     );
+    notification.read = true;
     return res.json(notification);
   }
 }
