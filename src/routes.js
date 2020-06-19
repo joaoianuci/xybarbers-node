@@ -15,6 +15,7 @@ import AppointmentController from './app/controllers/AppointmentController';
 import NotificationController from './app/controllers/NotificationController';
 
 import authMiddleware from './middlewares/auth';
+import ProviderValidateController from './app/controllers/ProviderValidateController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -35,6 +36,9 @@ routes.post(
   AuthenticateController.store
 );
 
+routes.post('/forgot', ForgotPasswordController.store);
+routes.post('/reset', ResetPasswordController.store);
+
 routes.use(authMiddleware);
 
 routes.put(
@@ -52,9 +56,6 @@ routes.get('/debug-sentry', function mainHandler() {
   throw new Error('My first Sentry error!');
 });
 
-routes.post('/forgot', ForgotPasswordController.store);
-routes.post('/reset', ResetPasswordController.store);
-
 routes.get('/providers', SearchController.index);
 
 routes.post('/appointments/:user_id', AppointmentController.store);
@@ -63,5 +64,7 @@ routes.delete('/appointments/:provider_id', AppointmentController.destroy);
 
 routes.get('/notifications', NotificationController.index);
 routes.put('/notifications/:notification_id', NotificationController.read);
+
+routes.post('/provider_validate', ProviderValidateController.store);
 
 export default routes;
