@@ -1,8 +1,10 @@
 import * as Yup from 'yup';
+import crypto from 'crypto';
 import PasswordValidator from 'password-validator';
 import User from '../models/User';
 import File from '../models/File';
 import Location from '../models/Location';
+import Queue from '../lib/Queue';
 
 class UserController {
   async store(req, res, next) {
@@ -18,6 +20,7 @@ class UserController {
       city: Yup.string().required(),
       longitude: Yup.number().required(),
       latitude: Yup.number().required(),
+      bio: Yup.string(),
     });
     const passwordSchema = new PasswordValidator();
 
@@ -56,6 +59,18 @@ class UserController {
     const user = await User.create(req.body);
     req.user = user;
 
+    const { provider } = req.body;
+    if (provider === true) {
+      const token = crypto
+        .randomBytes(3)
+        .toString('hex')
+        .toUpperCase();
+      user.update({ provider_token: token });
+      await Queue.add('ProviderValidateMail', {
+        user: { email: user.email, name: user.name },
+        token,
+      });
+    }
     return next();
   }
 
