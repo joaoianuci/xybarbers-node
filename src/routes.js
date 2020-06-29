@@ -18,6 +18,7 @@ import authMiddleware from './middlewares/auth';
 import ProviderValidateController from './app/controllers/ProviderValidateController';
 import ScheduleController from './app/controllers/ScheduleController';
 import AvailableController from './app/controllers/AvailableController';
+import RatingController from './app/controllers/RatingController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -54,11 +55,16 @@ routes.put(
 routes.get('/users/:user_id', UserController.show);
 routes.delete('/users/:user_id', UserController.destroy);
 
+routes.post('/users/:provider_id/rating', RatingController.store);
+routes.get('/users/:provider_id/rating', RatingController.index);
+
 routes.get('/debug-sentry', function mainHandler() {
   throw new Error('My first Sentry error!');
 });
 
 routes.get('/providers', SearchController.index);
+routes.post('/providers/validate', ProviderValidateController.store);
+routes.get('/providers/:provider_id/available', AvailableController.index);
 
 routes.post('/appointments/:user_id', AppointmentController.store);
 routes.get('/appointments', AppointmentController.index);
@@ -67,10 +73,6 @@ routes.delete('/appointments/:provider_id', AppointmentController.destroy);
 routes.get('/notifications', NotificationController.index);
 routes.put('/notifications/:notification_id', NotificationController.read);
 
-routes.post('/providers/validate', ProviderValidateController.store);
-
 routes.get('/schedule', ScheduleController.index);
-
-routes.get('/providers/:provider_id/available', AvailableController.index);
 
 export default routes;
