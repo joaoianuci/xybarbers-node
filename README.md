@@ -5,7 +5,7 @@
 </h1>
 
 <h4 align="center">
-  Schedulling app barber where users can find professionals with geolocation support.
+  Scheduling app barber where users can find professionals with geolocation support.
 </h4>
 <p align="center">
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/joaoianuci/xybarbers-node.svg">
@@ -29,7 +29,7 @@
   <a href="#memo-license">License</a>
 </p>
 
-## :rocket: Technologies
+## :bulb: Technologies
 
 This project was developed to graduation in IFSP with the following technologies:
 
