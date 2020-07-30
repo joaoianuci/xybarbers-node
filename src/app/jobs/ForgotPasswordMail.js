@@ -7,9 +7,7 @@ export default {
   },
   async handle({ data }) {
     const { user, token } = data;
-
     const text = `Hello ${user.name}`;
-
     await Mail.sendMail({
       to: user.email,
       from: 'XyBarbers <xybarbers@xybarbers.com.br>',
