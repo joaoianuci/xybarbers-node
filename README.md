@@ -8,13 +8,18 @@
   Scheduling app barber where users can find professionals with geolocation support.
 </h4>
 <p align="center">
+    
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/joaoianuci/xybarbers-node.svg">
   
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/joaoianuci/xybarbers-node.svg">
- 
+    
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/joaoianuci/xybarbers-node.svg">
   <a href="https://github.com/joaoianuci/xybarbers-node/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/joaoianuci/xybarbers-node.svg">
+  </a>
+  
+  <a href="https://app.codacy.com/gh/xybarbers/xybarbers-node?utm_source=github.com&utm_medium=referral&utm_content=xybarbers/xybarbers-  node&utm_campaign=Badge_Grade_Dashboard">
+   <img alt="Codacy badge" src="https://api.codacy.com/project/badge/Grade/214a062e26734d3e80931b211c9d582f">
   </a>
   
   <a href="https://github.com/joaoianuci/xybarbers-node/issues">
@@ -23,15 +28,12 @@
   
   <img alt="GitHub" src="https://img.shields.io/github/license/joaoianuci/xybarbers-node.svg">   
 </p>
-
 <p align="center">
   <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
 
 ## :bulb: Technologies
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/214a062e26734d3e80931b211c9d582f)](https://app.codacy.com/gh/xybarbers/xybarbers-node?utm_source=github.com&utm_medium=referral&utm_content=xybarbers/xybarbers-node&utm_campaign=Badge_Grade_Dashboard)
 
 This project was developed to graduation in IFSP with the following technologies:
 
