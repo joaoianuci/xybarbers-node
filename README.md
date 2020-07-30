@@ -31,6 +31,8 @@
 
 ## :bulb: Technologies
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/214a062e26734d3e80931b211c9d582f)](https://app.codacy.com/gh/xybarbers/xybarbers-node?utm_source=github.com&utm_medium=referral&utm_content=xybarbers/xybarbers-node&utm_campaign=Badge_Grade_Dashboard)
+
 This project was developed to graduation in IFSP with the following technologies:
 
 -  [Node.js][nodejs]
