@@ -43,9 +43,7 @@ class FileController {
         },
       ],
     });
-
-    const filteredUser = updateUser.filteredupdateUser(updateUser);
-
+    const filteredUser = updateUser.filteredUser(updateUser);
     return res.json(filteredUser);
   }
 }

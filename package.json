@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/joaoianuci/xybarbers-node.git",
-  "author": "João Vitor Ianuci",
+  "author": "joaoianuci",
   "license": "MIT",
   "scripts": {
     "eslint:fix": "eslint --fix src  --ext js",
