@@ -14,6 +14,7 @@ class UserController {
         .email()
         .required(),
       provider: Yup.boolean(),
+      phone: Yup.string().required(),
       number: Yup.number().required(),
       street: Yup.string().required(),
       neighborhood: Yup.string().required(),
@@ -128,6 +129,7 @@ class UserController {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       number: Yup.number().required(),
+      phone: Yup.string().required(),
       street: Yup.string().required(),
       neighborhood: Yup.string().required(),
       city: Yup.string().required(),
