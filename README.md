@@ -29,7 +29,7 @@
   <img alt="GitHub" src="https://img.shields.io/github/license/joaoianuci/xybarbers-node.svg">   
 </p>
 <p align="center">
-  <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#bulb-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
 
@@ -53,6 +53,7 @@ This project was developed to graduation in IFSP with the following technologies
 -   [Bcrypt](https://www.npmjs.com/package/bcrypt)
 -   [Yup](https://www.npmjs.com/package/yup)
 -   [Bull](https://www.npmjs.com/package/bull)
+-   [Bull-board](https://www.npmjs.com/package/bull-board)
 -   [Nodemailer](https://nodemailer.com/about/)
 -   [date-fns](https://date-fns.org/)
 -   [Sentry](https://sentry.io/)
