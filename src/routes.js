@@ -51,6 +51,7 @@ routes.put(
   upload.single('file'),
   UserController.update,
   LocationController.update,
+  AddressController.update,
   FileController.update
 );
 
