@@ -5,6 +5,7 @@ import multer from 'multer';
 import UserController from './app/controllers/UserController';
 import multerConfig from './config/multer';
 
+import AddressController from './app/controllers/AddressController';
 import FileController from './app/controllers/FileController';
 import LocationController from './app/controllers/LocationController';
 import ForgotPasswordController from './app/controllers/ForgotPasswordController';
@@ -30,6 +31,7 @@ routes.post(
   upload.single('file'),
   UserController.store,
   LocationController.store,
+  AddressController.store,
   FileController.store
 );
 
