@@ -25,22 +25,6 @@ module.exports = {
         allowNull: false,
         defaultValue: false,
       },
-      number: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      street: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      neighborhood: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      city: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       bio: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -60,6 +44,5 @@ module.exports = {
         allowNull: false,
       },
     }),
-
   down: queryInterface => queryInterface.dropTable('users'),
 };
