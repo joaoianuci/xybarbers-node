@@ -19,6 +19,9 @@ class UserController {
       street: Yup.string().required(),
       neighborhood: Yup.string().required(),
       city: Yup.string().required(),
+      state: Yup.string()
+        .length(2)
+        .required(),
       longitude: Yup.number().required(),
       latitude: Yup.number().required(),
       bio: Yup.string(),
