@@ -8,8 +8,9 @@ import Location from '../app/models/Location';
 import Rating from '../app/models/Rating';
 import databaseConfig from '../config/database';
 import Address from '../app/models/Address';
+import Service from '../app/models/Service';
 
-const models = [User, File, Appointment, Location, Rating, Address];
+const models = [User, File, Appointment, Location, Rating, Address, Service];
 
 class Database {
   constructor() {
