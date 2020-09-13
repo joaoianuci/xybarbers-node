@@ -48,7 +48,7 @@ class UserController {
     if (!passwordSchema.validate(req.body.password)) {
       return res
         .status(400)
-        .json({ message: 'Password is not satisfacting the requirements.' });
+        .json({ error: 'Password is not satisfacting the requirements.' });
     }
 
     if (!(await schema.isValid(req.body))) {
@@ -85,7 +85,7 @@ class UserController {
     if (!(await schema.isValid(req.params))) {
       return res
         .status(400)
-        .json({ message: 'The user identifier not is valid' });
+        .json({ error: 'The user identifier not is valid' });
     }
 
     const user = await User.findByPk(req.params.user_id, {
@@ -111,7 +111,7 @@ class UserController {
     });
 
     if (!user) {
-      return res.status(404).json({ message: 'The user not exists' });
+      return res.status(404).json({ error: 'The user not exists' });
     }
 
     return res.json(user);
@@ -120,7 +120,7 @@ class UserController {
   async destroy(req, res) {
     const user = await User.findByPk(req.userId);
     if (!user) {
-      return res.status(404).json({ message: 'The user not exists' });
+      return res.status(404).json({ error: 'The user not exists' });
     }
 
     await user.destroy();
@@ -146,7 +146,7 @@ class UserController {
     const user = await User.findByPk(req.userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'The user not exists' });
+      return res.status(404).json({ error: 'The user not exists' });
     }
 
     user.update(req.body);

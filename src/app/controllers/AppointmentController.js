@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 
 import User from '../models/User';
+import Service from '../models/Service';
 import File from '../models/File';
 import Appointment from '../models/Appointment';
 
@@ -30,6 +31,11 @@ class AppointmentController {
             },
           ],
         },
+        {
+          model: Service,
+          as: 'service',
+          attributes: ['id', 'name', 'price'],
+        },
       ],
     });
 
@@ -39,19 +45,21 @@ class AppointmentController {
   async store(req, res) {
     const schema = Yup.object().shape({
       provider_id: Yup.number().required(),
+      service_id: Yup.number().required(),
       date: Yup.date().required(),
     });
 
-    const { provider_id, date } = req.body;
+    const { provider_id, service_id, date } = req.body;
 
     if (!(await schema.isValid(req.body))) {
       return res
         .status(400)
-        .json({ message: 'The user identifier not is valid' });
+        .json({ error: 'The user identifier not is valid' });
     }
 
     const { appointment } = await CreateAppointment.run({
       provider_id,
+      service_id,
       user_id: req.userId,
       date,
       res,
@@ -62,21 +70,24 @@ class AppointmentController {
   async destroy(req, res) {
     const schema = Yup.object().shape({
       provider_id: Yup.number().required(),
+      service_id: Yup.number().required(),
     });
 
-    const { provider_id } = req.params;
+    const { provider_id, service_id } = req.params;
     if (
       !(await schema.isValid({
         user_id: req.userId,
-        provider_id: req.params.provider_id,
+        provider_id,
+        service_id,
       }))
     ) {
       return res
         .status(400)
-        .json({ message: 'The user identifier not is valid' });
+        .json({ error: 'The user identifier not is valid' });
     }
     const appointment = await CancelAppointment.run({
       provider_id,
+      service_id,
       user_id: req.userId,
       res,
     });
