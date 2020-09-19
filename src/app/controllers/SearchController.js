@@ -22,9 +22,7 @@ class SearchController {
       ],
     });
     if (!user) {
-      return res
-        .status(400)
-        .json({ error: 'Not was able to find the user.' });
+      return res.status(400).json({ error: 'Not was able to find the user.' });
     }
     if (user.provider) {
       return res

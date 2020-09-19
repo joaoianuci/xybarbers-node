@@ -51,8 +51,8 @@ routes.put(
   '/users/:user_id',
   upload.single('file'),
   UserController.update,
-  LocationController.update,
   AddressController.update,
+  LocationController.update,
   FileController.update
 );
 
