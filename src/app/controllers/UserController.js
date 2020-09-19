@@ -62,14 +62,13 @@ class UserController {
 
     const user = await User.create(req.body);
     req.user = user;
-
     const { provider } = req.body;
-    if (provider === true) {
+    if (provider) {
       const token = crypto
         .randomBytes(3)
         .toString('hex')
         .toUpperCase();
-      user.update({ provider_token: token });
+      await user.update({ provider_token: token });
       await Queue.add('ProviderValidateMail', {
         user: { email: user.email, name: user.name },
         token,
@@ -130,14 +129,14 @@ class UserController {
 
   async update(req, res, next) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      number: Yup.number().required(),
-      phone: Yup.string().required(),
-      street: Yup.string().required(),
-      neighborhood: Yup.string().required(),
-      city: Yup.string().required(),
-      longitude: Yup.number().required(),
-      latitude: Yup.number().required(),
+      name: Yup.string(),
+      number: Yup.number(),
+      phone: Yup.string(),
+      street: Yup.string(),
+      neighborhood: Yup.string(),
+      city: Yup.string(),
+      longitude: Yup.number(),
+      latitude: Yup.number(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -149,7 +148,7 @@ class UserController {
       return res.status(404).json({ error: 'The user not exists' });
     }
 
-    user.update(req.body);
+    await user.update(req.body);
 
     req.user = user;
     return next();
