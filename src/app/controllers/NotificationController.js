@@ -23,7 +23,7 @@ class NotificationController {
     if (!notification_id) {
       return res
         .status(404)
-        .json({ message: 'The notification identifier not is valid.' });
+        .json({ error: 'The notification identifier not is valid.' });
     }
     const notification = await Notification.findByIdAndUpdate(
       notification_id,

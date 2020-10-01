@@ -12,10 +12,6 @@ class User extends Model {
         phone: Sequelize.STRING,
         bio: Sequelize.STRING,
         provider: Sequelize.BOOLEAN,
-        number: Sequelize.INTEGER,
-        street: Sequelize.STRING,
-        neighborhood: Sequelize.STRING,
-        city: Sequelize.STRING,
         password_reset_token: {
           type: Sequelize.STRING,
           defaultValue: null,
@@ -49,6 +45,8 @@ class User extends Model {
   static associate(models) {
     this.hasOne(models.File, { foreignKey: 'user_id', as: 'avatar' });
     this.hasOne(models.Location, { foreignKey: 'user_id', as: 'point' });
+    this.hasOne(models.Address, { foreignKey: 'user_id', as: 'address' });
+    this.hasMany(models.Service, { foreignKey: 'user_id', as: 'services' });
   }
 
   async checkPassword(password) {
