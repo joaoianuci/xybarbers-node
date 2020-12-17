@@ -137,6 +137,8 @@ class UserController {
       city: Yup.string(),
       longitude: Yup.number(),
       latitude: Yup.number(),
+      password: Yup.string(),
+      newPassword: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -145,7 +147,11 @@ class UserController {
     const user = await User.findByPk(req.userId);
 
     if (!user) {
-      return res.status(404).json({ error: 'The user not exists' });
+      return res.status(404).json({ error: 'O usuário não existe' });
+    }
+
+    if (!user.checkPassword(password)) {
+      return res.status(402).json({ error: 'Falha na autenticação das senhas' });
     }
 
     await user.update(req.body);
