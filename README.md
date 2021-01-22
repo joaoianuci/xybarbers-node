@@ -77,5 +77,3 @@ Made with ♥ by João Vitor Ianuci :wave: [Get in touch!](https://www.linkedin.
 [vceditconfig]: https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig
 
 [vceslint]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-
-xyBarbers
