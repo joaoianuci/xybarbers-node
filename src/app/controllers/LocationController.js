@@ -1,6 +1,7 @@
 import Location from '../models/Location';
 import User from '../models/User';
 import File from '../models/File';
+import Address from '../models/Address';
 
 class LocationController {
   async store(req, res, next) {
@@ -36,6 +37,11 @@ class LocationController {
             as: 'point',
             attributes: ['id', 'longitude', 'latitude'],
           },
+          {
+            model: Address,
+            as: 'address',
+            attributes: ['id', 'number', 'street', 'neighborhood', 'city', 'state'],
+          }
         ],
       });
       const filteredUser = updateUser.filteredUser(updateUser);
