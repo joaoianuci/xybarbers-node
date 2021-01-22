@@ -50,8 +50,7 @@ class User extends Model {
   }
 
   async checkPassword(password) {
-    const check = await bcrypt.compare(password, this.password_hash);
-    return check;
+    return await bcrypt.compare(password, this.password_hash);
   }
 
   filteredUser(user) {
