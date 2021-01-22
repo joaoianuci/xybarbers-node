@@ -4,6 +4,7 @@ class Service extends Model {
   static init(sequelize) {
     super.init(
       {
+        type: Sequelize.STRING,
         name: Sequelize.STRING,
         description: Sequelize.STRING,
         price: Sequelize.FLOAT,
