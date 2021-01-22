@@ -1,6 +1,7 @@
 import File from '../models/File';
 import User from '../models/User';
 import Location from '../models/Location';
+import generateToken from '../utils/generateToken';
 
 class FileController {
   async store(req, res) {
@@ -18,7 +19,10 @@ class FileController {
 
     const filteredUser = user.filteredUser(user);
 
-    return res.json(filteredUser);
+    return res.json({
+      user: filteredUser,
+      token: generateToken({ id: user.id }),
+    });
   }
 
   async update(req, res, next) {
@@ -41,6 +45,11 @@ class FileController {
           as: 'point',
           attributes: ['id', 'longitude', 'latitude'],
         },
+        {
+          model: Address,
+          as: 'address',
+          attributes: ['id', 'number', 'street', 'neighborhood', 'city', 'state'],
+        }
       ],
     });
     const filteredUser = updateUser.filteredUser(updateUser);

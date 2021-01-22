@@ -1,8 +1,7 @@
 import * as Yup from 'yup';
-import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import File from '../models/File';
-import authConfig from '../../config/auth';
+import generateToken from '../utils/generateToken';
 
 class AuthenticateController {
   async store(req, res, next) {
@@ -16,18 +15,13 @@ class AuthenticateController {
         .max(35),
     });
 
-    const { secret } = authConfig;
     const { password, email } = req.body;
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ where: { email } });
     }
 
-    function generateToken(params = {}) {
-      return jwt.sign({ params }, secret, {
-        expiresIn: 86400,
-      });
-    }
+
     const user = await User.findOne({
       where: { email },
       include: [
