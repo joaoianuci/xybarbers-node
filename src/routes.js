@@ -45,6 +45,8 @@ routes.post(
 routes.post('/forgot', ForgotPasswordController.store);
 routes.post('/reset', ResetPasswordController.store);
 
+routes.put('/notifications/:notification_id', NotificationController.read);
+
 routes.use(authMiddleware);
 
 routes.put(
@@ -84,7 +86,6 @@ routes.delete(
 );
 
 routes.get('/notifications', NotificationController.index);
-routes.put('/notifications/:notification_id', NotificationController.read);
 
 routes.get('/schedule', ScheduleController.index);
 
