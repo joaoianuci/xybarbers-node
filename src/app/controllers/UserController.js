@@ -4,6 +4,8 @@ import PasswordValidator from 'password-validator';
 import User from '../models/User';
 import File from '../models/File';
 import Location from '../models/Location';
+import Address from '../models/Address';
+
 import Queue from '../lib/Queue';
 
 class UserController {
@@ -48,7 +50,7 @@ class UserController {
     if (!passwordSchema.validate(req.body.password)) {
       return res
         .status(400)
-        .json({ error: 'Password is not satisfacting the requirements.' });
+        .json({ error: 'Password is not satisfacting the requirements' });
     }
 
     if (!(await schema.isValid(req.body))) {
@@ -57,7 +59,7 @@ class UserController {
     const userExists = await User.findOne({ where: { email: req.body.email } });
 
     if (userExists) {
-      return res.status(400).json({ error: 'User already exists. ' });
+      return res.status(400).json({ error: 'User already exists' });
     }
 
     const user = await User.create(req.body);
@@ -78,16 +80,13 @@ class UserController {
   }
 
   async show(req, res) {
-    const schema = Yup.object().shape({
-      user_id: Yup.number().required(),
-    });
-    if (!(await schema.isValid(req.params))) {
+    if (!req.userId) {
       return res
         .status(400)
         .json({ error: 'The user identifier not is valid' });
     }
 
-    const user = await User.findByPk(req.params.user_id, {
+    const user = await User.findByPk(req.userId, {
       attributes: {
         exclude: [
           'password_hash',
@@ -106,6 +105,11 @@ class UserController {
           as: 'point',
           attributes: ['id', 'longitude', 'latitude'],
         },
+        {
+          model: Address,
+          as: 'address',
+          attributes: ['id', 'number', 'street', 'neighborhood', 'city', 'state'],
+        }
       ],
     });
 
@@ -135,25 +139,60 @@ class UserController {
       street: Yup.string(),
       neighborhood: Yup.string(),
       city: Yup.string(),
+      bio: Yup.string(),                                
       longitude: Yup.number(),
       latitude: Yup.number(),
       password: Yup.string(),
       newPassword: Yup.string(),
     });
+    const { password, newPassword } = req.body;
+    const passwordSchema = new PasswordValidator();
 
+    passwordSchema
+      .is()
+      .min(6)
+      .is()
+      .max(20)
+      .has()
+      .uppercase()
+      .has()
+      .lowercase()
+      .has()
+      .digits()
+      .has()
+      .not()
+      .spaces()
+      .has()
+      .symbols();
+      
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ where: { email: req.body.email } });
     }
+    
     const user = await User.findByPk(req.userId);
 
     if (!user) {
       return res.status(404).json({ error: 'O usuário não existe' });
     }
+    
+    if(!password && !newPassword){
+      await user.update(req.body);
+      req.user = user;
+      return next();
+    }
+    
+    if (newPassword !== undefined && !passwordSchema.validate(req.body.newPassword)) {
+      return res
+        .status(400)
+        .json({ error: 'Nova senha não satisfaz as condições necessárias' });
+    }
+    
+    const check = await user.checkPassword(password);
 
-    if (!user.checkPassword(password)) {
+    if (password !== undefined && !check) {
       return res.status(402).json({ error: 'Falha na autenticação das senhas' });
     }
-
+    req.body.password = newPassword;
     await user.update(req.body);
 
     req.user = user;

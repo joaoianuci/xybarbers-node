@@ -1,6 +1,7 @@
 import File from '../models/File';
 import User from '../models/User';
 import Location from '../models/Location';
+import Address from '../models/Address';
 import generateToken from '../utils/generateToken';
 
 class FileController {
