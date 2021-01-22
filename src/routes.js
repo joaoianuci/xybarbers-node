@@ -63,6 +63,9 @@ routes.post('/users/:provider_id/rating', RatingController.store);
 routes.get('/users/:provider_id/rating', RatingController.index);
 
 routes.post('/users/services', ServiceController.store);
+routes.get('/users/services/:service_id', ServiceController.show);
+routes.put('/users/services/:service_id', ServiceController.update);
+routes.get('/users/services', ServiceController.index);
 routes.delete('/users/services/:service_id', ServiceController.destroy);
 
 routes.get('/debug-sentry', function mainHandler() {
