@@ -13,7 +13,7 @@ import Service from '../models/Service';
 class CreateAppointment {
   async run({ provider_id, user_id, service_id, date, res }) {
     if (provider_id === user_id) {
-    return res
+      return res
         .status(400)
         .json({ error: 'You cannot create appointments for yourself' });
     }
@@ -49,7 +49,9 @@ class CreateAppointment {
       },
     });
     if (checkAvailability) {
-      return res.status(400).json({ error: 'Appointment date is not available' });
+      return res
+        .status(400)
+        .json({ error: 'Appointment date is not available' });
     }
     const appointment = await Appointment.create({
       user_id,
@@ -58,7 +60,7 @@ class CreateAppointment {
       date,
     });
 
-   const user = await User.findByPk(user_id, {
+    const user = await User.findByPk(user_id, {
       attributes: {
         exclude: [
           'password_hash',
@@ -80,8 +82,15 @@ class CreateAppointment {
         {
           model: Address,
           as: 'address',
-          attributes: ['id', 'number', 'street', 'neighborhood', 'city', 'state'],
-        }
+          attributes: [
+            'id',
+            'number',
+            'street',
+            'neighborhood',
+            'city',
+            'state',
+          ],
+        },
       ],
     });
     const formattedDate = format(

@@ -108,8 +108,15 @@ class UserController {
         {
           model: Address,
           as: 'address',
-          attributes: ['id', 'number', 'street', 'neighborhood', 'city', 'state'],
-        }
+          attributes: [
+            'id',
+            'number',
+            'street',
+            'neighborhood',
+            'city',
+            'state',
+          ],
+        },
       ],
     });
 
@@ -139,7 +146,7 @@ class UserController {
       street: Yup.string(),
       neighborhood: Yup.string(),
       city: Yup.string(),
-      bio: Yup.string(),                                
+      bio: Yup.string(),
       longitude: Yup.number(),
       latitude: Yup.number(),
       password: Yup.string(),
@@ -164,33 +171,38 @@ class UserController {
       .spaces()
       .has()
       .symbols();
-      
+
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ where: { email: req.body.email } });
     }
-    
+
     const user = await User.findByPk(req.userId);
 
     if (!user) {
       return res.status(404).json({ error: 'O usuário não existe' });
     }
-    
-    if(!password && !newPassword){
+
+    if (!password && !newPassword) {
       await user.update(req.body);
       req.user = user;
       return next();
     }
-    
-    if (newPassword !== undefined && !passwordSchema.validate(req.body.newPassword)) {
+
+    if (
+      newPassword !== undefined &&
+      !passwordSchema.validate(req.body.newPassword)
+    ) {
       return res
         .status(400)
         .json({ error: 'Nova senha não satisfaz as condições necessárias' });
     }
-    
+
     const check = await user.checkPassword(password);
 
     if (password !== undefined && !check) {
-      return res.status(402).json({ error: 'Falha na autenticação das senhas' });
+      return res
+        .status(402)
+        .json({ error: 'Falha na autenticação das senhas' });
     }
     req.body.password = newPassword;
     await user.update(req.body);

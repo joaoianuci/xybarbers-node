@@ -37,7 +37,7 @@ class ScheduleController {
               model: File,
               as: 'avatar',
               attributes: ['path', 'name'],
-            }
+            },
           ],
         },
         {

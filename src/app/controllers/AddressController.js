@@ -23,7 +23,7 @@ class AddressController {
     const { user } = req;
     const address = await Address.findOne({ where: { user_id: user.id } });
     await address.update({ number, street, neighborhood, city, state });
-    
+
     return next();
   }
 }

@@ -5,7 +5,9 @@ import User from '../models/User';
 class ServiceController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      type: Yup.string().required().uppercase(),
+      type: Yup.string()
+        .required()
+        .uppercase(),
       name: Yup.string().required(),
       description: Yup.string().required(),
       price: Yup.number().required(),
@@ -38,7 +40,9 @@ class ServiceController {
     if (!provider) {
       return res.status(404).json({ error: 'Usuário não existe' });
     }
-    const service = await Service.findOne({ where: { id: req.params.service_id, user_id: provider.id } });
+    const service = await Service.findOne({
+      where: { id: req.params.service_id, user_id: provider.id },
+    });
     await service.update({ name, description, price });
     return res.json(service);
   }
@@ -53,15 +57,17 @@ class ServiceController {
     const services = await Service.findAll({ where: { user_id: provider.id } });
     return res.json(services);
   }
-  
+
   async show(req, res) {
-     const provider = await User.findOne({
+    const provider = await User.findOne({
       where: { id: req.userId, provider: true },
     });
     if (!provider) {
       return res.status(404).json({ error: 'Profissional não existe' });
     }
-    const service = await Service.findOne({ where: { id: req.params.service_id} });
+    const service = await Service.findOne({
+      where: { id: req.params.service_id },
+    });
     return res.json(service);
   }
 

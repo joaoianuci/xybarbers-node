@@ -15,7 +15,7 @@ const NotificationSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-      avatar:{
+      avatar: {
         type: String,
         required: true,
       },

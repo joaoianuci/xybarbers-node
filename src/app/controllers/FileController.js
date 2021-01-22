@@ -49,8 +49,15 @@ class FileController {
         {
           model: Address,
           as: 'address',
-          attributes: ['id', 'number', 'street', 'neighborhood', 'city', 'state'],
-        }
+          attributes: [
+            'id',
+            'number',
+            'street',
+            'neighborhood',
+            'city',
+            'state',
+          ],
+        },
       ],
     });
     const filteredUser = updateUser.filteredUser(updateUser);

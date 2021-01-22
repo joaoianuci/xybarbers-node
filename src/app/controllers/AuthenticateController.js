@@ -21,7 +21,6 @@ class AuthenticateController {
       return res.status(400).json({ where: { email } });
     }
 
-
     const user = await User.findOne({
       where: { email },
       include: [

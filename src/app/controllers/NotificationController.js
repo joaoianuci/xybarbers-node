@@ -12,7 +12,9 @@ class NotificationController {
         .status(401)
         .json({ error: 'Only provider can load notifications.' });
     }
-    const notifications = await Notification.find({"user.id": req.userId}).sort({
+    const notifications = await Notification.find({
+      'user.id': req.userId,
+    }).sort({
       creadtedAt: 'desc',
     });
     return res.json(notifications);
