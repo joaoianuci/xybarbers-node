@@ -2,6 +2,9 @@ import { startOfDay, endOfDay, parseISO } from 'date-fns';
 import { Op } from 'sequelize';
 
 import User from '../models/User';
+import File from '../models/File';
+import Service from '../models/Service';
+
 import Appointment from '../models/Appointment';
 
 class ScheduleController {
@@ -29,6 +32,18 @@ class ScheduleController {
           model: User,
           as: 'user',
           attributes: ['name'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['path', 'name'],
+            }
+          ],
+        },
+        {
+          model: Service,
+          as: 'service',
+          attributes: ['name', 'type'],
         },
       ],
       order: ['date'],
