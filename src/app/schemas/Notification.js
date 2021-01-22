@@ -7,8 +7,18 @@ const NotificationSchema = new mongoose.Schema(
       required: true,
     },
     user: {
-      type: Number,
-      required: true,
+      id: {
+        type: Number,
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      avatar:{
+        type: String,
+        required: true,
+      },
     },
     read: {
       type: Boolean,
