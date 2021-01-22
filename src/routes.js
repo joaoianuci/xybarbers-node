@@ -48,7 +48,7 @@ routes.post('/reset', ResetPasswordController.store);
 routes.use(authMiddleware);
 
 routes.put(
-  '/users/:user_id',
+  '/users',
   upload.single('file'),
   UserController.update,
   AddressController.update,
@@ -56,8 +56,8 @@ routes.put(
   FileController.update
 );
 
-routes.get('/users/:user_id', UserController.show);
-routes.delete('/users/:user_id', UserController.destroy);
+routes.get('/users', UserController.show);
+routes.delete('/users', UserController.destroy);
 
 routes.post('/users/:provider_id/rating', RatingController.store);
 routes.get('/users/:provider_id/rating', RatingController.index);
@@ -76,7 +76,7 @@ routes.get('/providers', SearchController.index);
 routes.post('/providers/validate', ProviderValidateController.store);
 routes.get('/providers/:provider_id/available', AvailableController.index);
 
-routes.post('/appointments/:user_id', AppointmentController.store);
+routes.post('/appointments', AppointmentController.store);
 routes.get('/appointments', AppointmentController.index);
 routes.delete(
   '/appointments/:provider_id/:service_id',
