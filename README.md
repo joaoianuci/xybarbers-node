@@ -18,7 +18,7 @@
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/joaoianuci/xybarbers-node.svg">
   </a>
   
-  <a href="https://app.codacy.com/gh/xybarbers/xybarbers-node?utm_source=github.com&utm_medium=referral&utm_content=xybarbers/xybarbers-node&utm_campaign=Badge_Grade_Dashboard">
+  <a href="https://app.codacy.com/gh/xybarbers/xybarbers-node?utm_source=github.com&utm_medium=referral&utm_content=joaoianuci/xybarbers-node&utm_campaign=Badge_Grade_Dashboard">
    <img alt="Codacy badge" src="https://api.codacy.com/project/badge/Grade/214a062e26734d3e80931b211c9d582f">
   </a>
   
